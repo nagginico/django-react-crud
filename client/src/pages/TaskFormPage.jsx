@@ -1,7 +1,8 @@
 import { useForm } from 'react-hook-form';
-import { createTasks, deleteTask, uptdateTask, getTask } from '../api/tasks.api';
+import { createTasks, deleteTask, updateTasks, getTask } from '../api/tasks.api';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
+import {toast} from 'react-hot-toast'
 
 export function TasksFormPage(){
 
@@ -20,9 +21,11 @@ export function TasksFormPage(){
 
     const onSubmit = handleSubmit(async (data) => {
         if (params.id){
-            console.log('Actualizando')
+            await updateTasks(params.id, data);
+
         }else{
             const res = await createTasks(data);
+            toast.success('Tarea creada')
         }
         navigate("/tasks");
     });
